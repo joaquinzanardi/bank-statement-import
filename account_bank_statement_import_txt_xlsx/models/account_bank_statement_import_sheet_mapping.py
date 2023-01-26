@@ -147,6 +147,9 @@ class AccountBankStatementImportSheetMapping(models.Model):
         string='Bank Account column',
         help='Partner\'s bank account',
     )
+    transaction_number_column = fields.Char(
+        string='Transaction Number column',
+    )
 
     @api.onchange('float_thousands_sep')
     def onchange_thousands_separator(self):

@@ -59,6 +59,7 @@
                         <field name="partner_name_column"/>
                         <field name="bank_name_column"/>
                         <field name="bank_account_column"/>
+                        <field name="transaction_number_column"/>
                     </group>
                 </sheet>
             </form>

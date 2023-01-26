@@ -148,6 +148,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             if mapping.bank_name_column else None
         bank_account_column = header.index(mapping.bank_account_column) \
             if mapping.bank_account_column else None
+        transaction_number_column = header.index(mapping.transaction_number_column) \
+            if mapping.transaction_number_column else None
 
         if isinstance(csv_or_xlsx, tuple):
             rows = range(1, csv_or_xlsx[1].nrows)
@@ -195,6 +197,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 if bank_name_column is not None else None
             bank_account = values[bank_account_column] \
                 if bank_account_column is not None else None
+            transaction_number = values[transaction_number_column] \
+                if transaction_number_column is not None else None
 
             if currency != currency_code:
                 continue
@@ -253,6 +257,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 line['bank_name'] = bank_name
             if bank_account is not None:
                 line['bank_account'] = bank_account
+            if transaction_number is not None:
+                line['transaction_number'] = transaction_number
             lines.append(line)
         return lines
 
@@ -271,6 +277,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
         partner_name = line.get('partner_name')
         bank_name = line.get('bank_name')
         bank_account = line.get('bank_account')
+        transaction_number = line.get('transaction_number')
 
         transaction = {
             'date': timestamp,
@@ -323,6 +330,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             transaction['partner_name'] = partner_name
         if bank_account:
             transaction['account_number'] = bank_account
+        if transaction_number:
+            transaction['transaction_number'] = transaction_number
 
         return [transaction]
 
